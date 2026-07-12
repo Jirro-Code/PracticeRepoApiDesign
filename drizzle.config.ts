@@ -1,5 +1,7 @@
+//drizzle-kit is a CLI tool for managing database migrations and automatically
+//generate pre-typed query for your database
 import { defineConfig } from 'drizzle-kit'
-import env from './env.ts'
+import {env} from "./env.ts"
 
 export default defineConfig({
   schema: './src/db/schema.ts',

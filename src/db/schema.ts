@@ -1,5 +1,4 @@
 import { mysqlTable, varchar, text, timestamp, boolean, int} from "drizzle-orm/mysql-core";
-import { v4 as uuid } from "uuid";
 import {relations} from "drizzle-orm";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
