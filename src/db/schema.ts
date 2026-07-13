@@ -2,6 +2,7 @@ import { mysqlTable, varchar, text, timestamp, boolean, int} from "drizzle-orm/m
 import {relations} from "drizzle-orm";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
+//unique() will ensures that there are no duplicate value across the entire db
 export const users = mysqlTable("users", {
     id: varchar("id", {length: 36}).primaryKey(),
     username: varchar("username", {length: 255}).notNull().unique(),
@@ -93,7 +94,11 @@ export const habitTagsRelations = relations(habitTags, ({one}) => ({
     }),
 }));
 
+//inferSelect will select a user from the db and there will always have 
+//an id, createdAt, and updatedAt field even the user doesn't provide them when creating a new user
+//while inferInsert will only expect the fields that the user provides
 export type User = typeof users.$inferSelect;
+export type NewUser = typeof users.$inferInsert;
 export type Habit = typeof habits.$inferSelect;
 export type Entry = typeof entries.$inferSelect;
 export type Tag = typeof tags.$inferSelect;

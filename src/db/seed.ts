@@ -1,5 +1,5 @@
 //seed is a script that populates the database with fake data for testing and development purposes
-//never run this script in production, this will delete all the data in db
+//never run this script in production, this will delete all the data in the db
 import {db} from "./connnections.ts";
 import {users, habits, entries, tags, habitTags} from "./schema.ts";
 import { v4 as uuid } from "uuid";
@@ -81,6 +81,7 @@ const seed = async () => {
 }
 
 // process.argv[1] is the path where the script is executed.
+//this prevents the script from automatic execution when imported as a module in other files.
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
     seed()
     .then(() => process.exit(0))

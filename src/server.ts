@@ -24,6 +24,11 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/habits', habitRoutes);
 
+//frontend connection to backend
+app.get(`/`, (req, res) => {
+    res.sendFile(process.cwd() + `/public/index.html`)
+});
+
 app.get(`/health`, (req, res) => {
     res.send(`<button>`);
 });
