@@ -104,5 +104,10 @@ export type Entry = typeof entries.$inferSelect;
 export type Tag = typeof tags.$inferSelect;
 export type HabitTag = typeof habitTags.$inferSelect;
 
-export const insertUserSchema = createInsertSchema(users);
+//omit() will remove the fields that are not required when creating a new user
+export const insertUserSchema = createInsertSchema(users).omit({
+    id: true,
+    createdAt: true,
+    updatedAt: true,
+});
 export const selectUserSchema = createSelectSchema(users);
