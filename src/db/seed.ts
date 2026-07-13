@@ -1,6 +1,6 @@
 //seed is a script that populates the database with fake data for testing and development purposes
 //never run this script in production, this will delete all the data in the db
-import {db} from "./connnections.ts";
+import {db} from "./connections.ts";
 import {users, habits, entries, tags, habitTags} from "./schema.ts";
 import { v4 as uuid } from "uuid";
 import { pathToFileURL } from "node:url";

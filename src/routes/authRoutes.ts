@@ -3,6 +3,7 @@ import { register, login } from '../controllers/authController.ts';
 import {validateBody} from '../middleware/validation.ts';
 import { insertUserSchema } from '../db/schema.ts';
 import { z } from 'zod';
+
 const router = Router();
 
 const loginSchema = z.object({

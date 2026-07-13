@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import {db} from "../db/connnections.ts";
+import {db} from "../db/connections.ts";
 import {users, type NewUser} from "../db/schema.ts";
 import {generateToken} from "../utils/jwt.ts";
 import {hashPassword, comparePassword} from "../utils/passwords.ts";

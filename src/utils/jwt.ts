@@ -2,7 +2,7 @@
 //with JWT you don't need to fetch all of your data to the server
 //instead you can just send the JWT to the server and the server can verify the JWT and get the user data from ittttttttttttttttttt
 
-import  {type JWTPayload, SignJWT} from "jose";
+import  {type JWTPayload, jwtVerify, SignJWT} from "jose";
 import {createSecretKey} from "crypto"
 import env from "../../env.ts";
 
@@ -21,4 +21,10 @@ export const generateToken = async (payload: JwtPayload) => {
     .setIssuedAt()
     .setExpirationTime(env.JWT_EXPIRES_IN || "3d")
     .sign(secretKey);
+}
+
+export const verifyToken = async (token: string): Promise<JwtPayload> =>{
+    const secretKey = createSecretKey(env.JWT_SECRET, "utf-8");
+    const { payload } = await jwtVerify(token, secretKey);
+    return payload as unknown as JwtPayload;
 }
