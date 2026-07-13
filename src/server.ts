@@ -10,7 +10,6 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import { isTest } from '../env.ts';
 
-
 const app = express();
 app.use(helmet());
 app.use(cors());
