@@ -39,3 +39,31 @@ export const createHabit = async (req: AuthenticatedRequest, res: Response) => {
         res.status(500).json({message: "Error creating habit"});
     }
 }
+
+export const getUserHabits = async (req: AuthenticatedRequest, res: Response) => {
+    try{
+        const userHabitsWithTags = await db.query.habits.findMany({
+            where: eq(habits.userId, req.user!.id),
+            //with allows to include related data from other tables in the result set
+            with: {
+                habitTags: {
+                    with: {
+                        //true means we want to include the tag data in the result if there is a tag associated with the habitTag
+                        tag: true
+                    }
+                }
+            },  
+            //desc is used to sort the results in descending order based on the createdAt field of the habits table
+            orderBy: [desc(habits.createdAt)]
+        })
+        const habitsWithTags = userHabitsWithTags.map((habit) => ({
+            ...habit,
+            tags: habit.habitTags.map((habitTag) => habitTag.tag),
+            // Remove habitTags from the response since we only want to return the tags
+            habitTags: undefined 
+        }))
+        res.status(200).json({message: "Habits retrieved successfully", habits: habitsWithTags});
+    }catch (e){
+        res.status(500).json({message: "Error retrieving habits"});
+    }
+}
