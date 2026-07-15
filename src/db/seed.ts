@@ -4,6 +4,8 @@ import {db} from "./connections.ts";
 import {users, habits, entries, tags, habitTags} from "./schema.ts";
 import { v4 as uuid } from "uuid";
 import { pathToFileURL } from "node:url";
+import {hashPassword} from "../utils/passwords.ts";
+import { generateToken } from "../utils/jwt.ts";
 
 const seed = async () => {
     console.log("starting database seed...");
@@ -19,18 +21,23 @@ const seed = async () => {
         console.log("creating fake users...");
         const demoUser = {
             id: uuid(),
-            username: "usertwo",
-            email: "usertwo@example.com",
-            password: "password2",
+            username: "SampleUser",
+            email: "User67@sample.com",
+            password: await hashPassword("password123"),
             firstName: "User",
-            lastName: "Two",
+            lastName: "Sample",
         };
+        const token = await generateToken({
+            id: demoUser.id,
+            username: demoUser.username,
+            email: demoUser.email
+        })
         await db.insert(users).values(demoUser);
 
         console.log("creating fake tags...");
         const healthTag = {
             id: uuid(),
-            name: "Health",
+            name: "SampleTag",
             color: "#FF5733",
         };
         await db.insert(tags).values(healthTag);
@@ -38,7 +45,7 @@ const seed = async () => {
         const exerciseHabit = {
             id: uuid(),
             userId: demoUser.id,
-            name: "Exercise",
+            name: "Sample Exercise Habit",
             description: "Daily exercise routine",
             frequency: "Daily",
             targetCount: 1,
@@ -73,6 +80,7 @@ const seed = async () => {
         console.log(`Username: ${demoUser.username}`);
         console.log(`Email: ${demoUser.email}`);
         console.log(`Password: ${demoUser.password}`);
+        console.log(`JWT Token: ${token}`);
 
     }catch (e){
         console.error("Error occurred while seeding the database:", e);

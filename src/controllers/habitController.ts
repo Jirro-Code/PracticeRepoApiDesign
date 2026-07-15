@@ -44,6 +44,7 @@ export const createHabit = async (req: AuthenticatedRequest, res: Response) => {
 export const getUserHabits = async (req: AuthenticatedRequest, res: Response) => {
     try{
         const userHabitsWithTags = await db.query.habits.findMany({
+            //checks and find the user's habit table has a habit with the userId that matches the request user's id
             where: eq(habits.userId, req.user!.id),
             //with allows to include related data from other tables in the result set
             with: {
