@@ -5,7 +5,6 @@ import {users, habits, entries, tags, habitTags} from "./schema.ts";
 import { v4 as uuid } from "uuid";
 import { pathToFileURL } from "node:url";
 import {hashPassword} from "../utils/passwords.ts";
-import { generateToken } from "../utils/jwt.ts";
 
 const seed = async () => {
     console.log("starting database seed...");
@@ -27,11 +26,7 @@ const seed = async () => {
             firstName: "User",
             lastName: "Sample",
         };
-        const token = await generateToken({
-            id: demoUser.id,
-            username: demoUser.username,
-            email: demoUser.email
-        })
+
         await db.insert(users).values(demoUser);
 
         console.log("creating fake tags...");
@@ -80,7 +75,6 @@ const seed = async () => {
         console.log(`Username: ${demoUser.username}`);
         console.log(`Email: ${demoUser.email}`);
         console.log(`Password: ${demoUser.password}`);
-        console.log(`JWT Token: ${token}`);
 
     }catch (e){
         console.error("Error occurred while seeding the database:", e);
