@@ -9,6 +9,7 @@ import morgan from 'morgan';
 //helmet is a middleware that helps secure the app by setting various HTTP headers.
 import helmet from 'helmet';
 import { isTest } from '../env.ts';
+import { errorHandler, APIError} from './middleware/errorHandler.ts';
 
 const app = express();
 app.use(helmet());
@@ -28,6 +29,10 @@ app.get(`/`, (req, res) => {
     res.sendFile(process.cwd() + `/public/index.html`)
 });
 
+/*app.use((_, __, next) => {
+    next(new APIError("Validation Error", "ValidationError", 400))
+})*/
+
 app.get(`/health`, (req, res) => {
     res.send(`<button>`);
 });
@@ -35,6 +40,8 @@ app.get(`/health`, (req, res) => {
 app.post(`/cake/:name/:sid`, (req, res) => {
     res.json(req.params);
 });
+
+app.use(errorHandler);
 
 export {app};
 export default app;
