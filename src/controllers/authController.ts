@@ -5,7 +5,7 @@ import {generateToken} from "../utils/jwt.ts";
 import {hashPassword, comparePassword} from "../utils/passwords.ts";
 import { v4 as uuid } from "uuid";
 import { eq } from "drizzle-orm";
-import bcrypt from "bcrypt";
+
 
 export const register = async  (req: Request<any, any, NewUser>, res: Response) => {
     try{
@@ -55,7 +55,10 @@ export const login = async (req: Request, res: Response) => {
             email: user.email
         });
 
-        return res.json({ message: "Login successful", user, token }).status(201);
+        // Exclude password from the response
+        const {password: _, ...userWithoutPassword} = user; 
+
+        return res.status(201).json({ message: "Login successful", user: userWithoutPassword, token });
     }catch (e){
         console.error("Error occurred while logging in:", e);
         return res.status(500).json({ error: "Internal server error" });

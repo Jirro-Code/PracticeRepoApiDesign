@@ -27,4 +27,19 @@ describe("Authentication Endpoints", () => {
             expect(response.body.newUser).not.toHaveProperty("password");
         })
     })
+    describe("POST /api/auth/login", () => {
+        it("should login an existing user and return a token", async () => {
+            const testUser = await createTestUser();
+            const response = await request(app).post("/api/auth/login").send({
+                email: testUser.user.email,
+                password: testUser.rawPassword
+            }).expect(201);
+            console.log(response.body);
+
+            expect(response.body).toHaveProperty("message");
+            expect(response.body).toHaveProperty("user");
+            expect(response.body).toHaveProperty("token");
+            expect(response.body.user).not.toHaveProperty("password");
+        })
+    })
 })
