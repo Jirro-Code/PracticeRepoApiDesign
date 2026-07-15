@@ -40,7 +40,7 @@ export const createTestHabit = async (userId: string, habitData: Partial<NewHabi
     return defaultHabitData;
 }
 
-export const cleanUp = async () => {
+export const cleanUpDb = async () => {
     await db.delete(entries);
     await db.delete(habitTags);
     await db.delete(habits);

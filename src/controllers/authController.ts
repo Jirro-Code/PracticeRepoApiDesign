@@ -10,12 +10,13 @@ import bcrypt from "bcrypt";
 export const register = async  (req: Request<any, any, NewUser>, res: Response) => {
     try{
         const hashedPassword = await hashPassword(req.body.password);
-        const newUser = {
+        const userData = {
             ...req.body,
             id: uuid(),
             password: hashedPassword
         }
-        await db.insert(users).values(newUser);
+        const {password, ...newUser} = userData;
+        await db.insert(users).values(userData);
 
         const token = await generateToken({
             id: newUser.id,
