@@ -11,7 +11,7 @@ const isTesting = process.env.APP_STAGE === `test`;
 if (isDevelopment) {
     loadEnv();
 } else if (isTesting) {
-    loadEnv(`test`);
+    loadEnv("test");
 }
 
 const envSchema = z.object({
