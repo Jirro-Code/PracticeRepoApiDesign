@@ -61,6 +61,6 @@ export const login = async (req: Request, res: Response) => {
         return res.status(201).json({ message: "Login successful", user: userWithoutPassword, token });
     }catch (e){
         console.error("Error occurred while logging in:", e);
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json({ error: `Internal server error :: ${e}` });
     }
 }
