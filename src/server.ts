@@ -34,7 +34,7 @@ app.get(`/`, (req, res) => {
 })*/
 
 app.get(`/health`, (req, res) => {
-    res.send(`<button>`);
+    res.send(`ok`);
 });
 
 app.post(`/cake/:name/:sid`, (req, res) => {
