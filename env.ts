@@ -2,10 +2,10 @@ import {env as loadEnv} from "custom-env";
 //zod is a package that validates the environment's data type and format
 import {z} from "zod";
 
-process.env.APP_STAGE = process.env.APP_STAGE || `dev`;
+process.env.APP_STAGE = process.env.APP_STAGE || `development`;
 
 const isProduction = process.env.APP_STAGE === `production`;
-const isDevelopment = process.env.APP_STAGE === `dev`;
+const isDevelopment = process.env.APP_STAGE === `development`;
 const isTesting = process.env.APP_STAGE === `test`;
 
 if (isDevelopment) {
@@ -16,7 +16,7 @@ if (isDevelopment) {
 
 const envSchema = z.object({
     NODE_ENV: z.enum([`production`, `development`, `test`]).default(`development`),
-    APP_STAGE: z.enum([`production`, `dev`, `test`]).default(`dev`),
+    APP_STAGE: z.enum([`production`, `development`, `test`]).default(`development`),
     PORT: z.coerce.number().positive().default(3000),
     DATABASE_URL: z.string().startsWith(`mysql://`),
     JWT_SECRET: z.string().min(32, `must be at least 32 characters long`),
@@ -48,7 +48,7 @@ try{
 }
 
 export const isProd = () => env.APP_STAGE === `production`;
-export const isDev = () => env.APP_STAGE === `dev`;
+export const isDev = () => env.APP_STAGE === `development`;
 export const isTest = () => env.APP_STAGE === `test`;
 
 export { env };
